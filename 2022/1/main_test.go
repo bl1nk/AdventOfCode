@@ -1,15 +1,21 @@
 package main
 
 import (
+	"os"
 	"testing"
-
-	"github.com/bl1nk/adventofcode/x"
 )
 
 func TestPart1(t *testing.T) {
-	in := x.ReadString("./testdata/example.txt")
+	in, err := os.ReadFile("./testdata/example.txt")
+	if err != nil {
+		t.Fatal(err)
+	}
 
-	elves := foldCalories(in)
+	elves, err := foldCalories(string(in))
+	if err != nil {
+		t.Fatal(err)
+	}
+
 	actual, err := sumN(1, elves)
 	if err != nil {
 		t.Fatal(err)
@@ -22,9 +28,16 @@ func TestPart1(t *testing.T) {
 }
 
 func TestPart2(t *testing.T) {
-	in := x.ReadString("./testdata/example.txt")
+	in, err := os.ReadFile("./testdata/example.txt")
+	if err != nil {
+		t.Fatal(err)
+	}
 
-	elves := foldCalories(in)
+	elves, err := foldCalories(string(in))
+	if err != nil {
+		t.Fatal(err)
+	}
+
 	actual, err := sumN(3, elves)
 	if err != nil {
 		t.Fatal(err)
