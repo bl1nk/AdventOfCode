@@ -40,7 +40,6 @@ func main() {
 	}
 
 	fmt.Printf("Part 2: The three elves carrying the most calories carry %d calories.\n", topThree)
-
 }
 
 func foldCalories(in string) ([]int, error) {
@@ -75,5 +74,4 @@ func sumN(n int, ints []int) (int, error) {
 		s += i
 	}
 	return s, nil
-
 }
