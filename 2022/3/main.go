@@ -17,6 +17,9 @@ func main() {
 	// rucksack. What is the sum of the priorities of those item types?
 	part1 := solvePart1(strings.TrimSpace(string(in)))
 	fmt.Printf("The sum of the priorities of items that appear in both compartments of each rucksack is: %d\n", part1)
+
+	part2 := solvePart2(strings.TrimSpace(string(in)))
+	fmt.Printf("The sum of the priorities of badges of each three-elf groups is: %d\n", part2)
 }
 
 func solvePart1(in string) int {
@@ -24,6 +27,22 @@ func solvePart1(in string) int {
 	for _, rucksack := range strings.Split(in, "\n") {
 		sum += sumPriorities(rucksack)
 	}
+	return sum
+}
+
+func solvePart2(in string) int {
+	var sum int
+
+	rucksacks := strings.Split(in, "\n")
+	for idx := 0; idx < len(rucksacks); idx = idx + 3 {
+		for _, item := range rucksacks[idx] {
+			if strings.ContainsRune(rucksacks[idx+1], item) && strings.ContainsRune(rucksacks[idx+2], item) {
+				sum += priority(item)
+				break
+			}
+		}
+	}
+
 	return sum
 }
 
