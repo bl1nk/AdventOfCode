@@ -25,6 +25,14 @@ func main() {
 	}
 
 	fmt.Printf("Part 1: On top of each stack: %q\n", part1)
+
+	part2, err := solvePart2(string(in))
+	if err != nil {
+		fmt.Println(err.Error())
+		os.Exit(1)
+	}
+
+	fmt.Printf("Part 2: On top of each stack: %q\n", part2)
 }
 
 func solvePart1(in string) (string, error) {
@@ -34,6 +42,16 @@ func solvePart1(in string) (string, error) {
 	}
 	for _, move := range moves {
 		state = advance(state, move)
+	}
+	return state.solutionString(), nil
+}
+func solvePart2(in string) (string, error) {
+	state, moves, err := parseStateAndMoves(in)
+	if err != nil {
+		return "", err
+	}
+	for _, move := range moves {
+		state = advance9001(state, move)
 	}
 	return state.solutionString(), nil
 }
@@ -135,5 +153,17 @@ func advance(s state, m move) state {
 		s.stacks[m.to-1] = toStack
 	}
 
+	return s
+}
+
+func advance9001(s state, m move) state {
+	fromStack := s.stacks[m.from-1]
+	toStack := s.stacks[m.to-1]
+
+	crate, fromStack := fromStack[len(fromStack)-m.count:], fromStack[:len(fromStack)-m.count]
+	toStack = append(toStack, crate...)
+
+	s.stacks[m.from-1] = fromStack
+	s.stacks[m.to-1] = toStack
 	return s
 }
