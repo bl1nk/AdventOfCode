@@ -48,3 +48,46 @@ func TestComms_FindStartOfPacketMarker(t *testing.T) {
 		})
 	}
 }
+
+func TestComms_FindStartOfMessageMarker(t *testing.T) {
+	tests := []struct {
+		name     string
+		input    string
+		expected int
+	}{
+		{
+			name:     "example 1",
+			input:    `mjqjpqmgbljsphdztnvjfqwrcgsmlb`,
+			expected: 19,
+		},
+		{
+			name:     "example 2",
+			input:    `bvwbjplbgvbhsrlpgdmjqwftvncz`,
+			expected: 23,
+		},
+		{
+			name:     "example 3",
+			input:    `nppdvjthqldpwncqszvftbrmjlhg`,
+			expected: 23,
+		},
+		{
+			name:     "example 4",
+			input:    `nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg`,
+			expected: 29,
+		},
+		{
+			name:     "example 5",
+			input:    `zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw`,
+			expected: 26,
+		},
+	}
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			c := Comms{
+				data: test.input,
+			}
+			actual := c.FindStartOfMessageMarker()
+			assert.Equal(t, test.expected, actual)
+		})
+	}
+}

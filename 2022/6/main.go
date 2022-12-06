@@ -15,4 +15,6 @@ func main() {
 	}
 	m := c.FindStartOfPacketMarker()
 	fmt.Printf("Part 1: %d packets need to be processed before the first start-of-packet marker is detected.\n", m)
+	m = c.FindStartOfMessageMarker()
+	fmt.Printf("Part 2: %d packets need to be processed before the first start-of-message marker is detected.\n", m)
 }

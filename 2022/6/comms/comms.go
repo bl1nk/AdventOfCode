@@ -16,12 +16,19 @@ func New(fileName string) (Comms, error) {
 }
 
 func (c *Comms) FindStartOfPacketMarker() int {
-	numUnique := 4
+	return findMarker(c.data, 4)
+}
+
+func (c *Comms) FindStartOfMessageMarker() int {
+	return findMarker(c.data, 14)
+}
+
+func findMarker(data string, numUnique int) int {
 	n := 0
-	for n < len(c.data) {
+	for n < len(data) {
 		buf := make(map[byte]struct{})
 		for i := n; i < (n + numUnique); i++ {
-			buf[c.data[i]] = struct{}{}
+			buf[data[i]] = struct{}{}
 		}
 
 		if len(buf) == numUnique {
